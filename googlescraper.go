@@ -1,34 +1,32 @@
 package googlescraper
 
 import (
-	"fmt"
-	"net/http"
-	"strings"
+    "fmt"
+    "net/http"
+    "strings"
     "github.com/PuerkitoBio/goquery"
 )
 
 type GoogleResult struct{
-	ResultRank int
-	ResultURL string
-	ResultTitle string
-	ResultDesc string
+    ResultRank int
+    ResultURL string
+    ResultTitle string
+    ResultDesc string
 }
 
 var googleDomains = map[string]string{
-	"com": "https://www.google.com/search?q=",
+    "com": "https://www.google.com/search?q=",
     "id": "https://www.google.co.id/search?q=",
-    "uk": "https://www.google.co.uk/search?q=",
-	"ru": "https://www.google.ru/search?q=",
-	"fr": "https://www.google.fr/search?q=",
+    "ddg": "https://www.duckduckgo.com/?q="
 }
 
 func buildGoogleUrl(searchTerm string, countryCode string, languageCode string) string {
 	searchTerm = strings.Trim(searchTerm, " ")
 	searchTerm = strings.Replace(searchTerm, " ", "+", -1)
 	if googleBase, found := googleDomains[countryCode]; found {
-		return fmt.Sprintf("%s%s&num=100&hl=%s", googleBase, searchTerm, languageCode)
-	} else {
-		return fmt.Sprintf("%s%s&num=100&hl=%s", googleDomains["com"], searchTerm, languageCode)
+	    return fmt.Sprintf("%s%s&num=100&hl=%s", googleBase, searchTerm, languageCode)
+	}else {
+	    return fmt.Sprintf("%s%s&num=100&hl=%s", googleDomains["com"], searchTerm, languageCode)
 	}
 }
 
